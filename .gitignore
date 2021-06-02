@@ -1,4 +1,4 @@
 # Exclude xml and iml files
-
 *.xml
 *.iml
+*.idea
