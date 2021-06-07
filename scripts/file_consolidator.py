@@ -1,6 +1,6 @@
 ### Step 1: Consolidate All CSV's in a Sub Folder ###
 
-from functions import *
+import functions
 import pandas as pd
 import glob
 import time
@@ -8,10 +8,7 @@ import time
 # Start timer
 start = time.time()
 
-# Make sure to update both paths
-path = ''
-
-files = glob.glob(path + '/*/*.csv')
+files = glob.glob(functions.path + '/*/*.csv')
 print(str(len(files)), 'files')
 
 data = pd.DataFrame()
@@ -21,7 +18,7 @@ for count, f in enumerate(files, 1):
     data = data.append(csv)
     print(str(round(((count/len(files))*100), 2)) + '%' + ' (' + str(count) + ')')
 
-data.to_csv(path + '/consolidated.csv', index=False)
+data.to_csv(functions.path + '/consolidated.csv', index=False)
 
 # Stop timer and calculate runtime
 end = time.time()

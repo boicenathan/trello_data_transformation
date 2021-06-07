@@ -1,15 +1,14 @@
 ### Step 2: Trim the File ###
 
-from functions import *
+import functions
 import pandas as pd
 import time
-from file_consolidator import path
 
 # Start timer
 start = time.time()
 
 # Load consolidated file
-cons = pd.read_csv(path + '/consolidated.csv', dtype=str, keep_default_na=False)
+cons = pd.read_csv(functions.path + '/consolidated.csv', dtype=str, keep_default_na=False)
 print('File loaded')
 
 # Year to be extracted
@@ -41,9 +40,9 @@ new = new[new['year'].isin(year)]
 print('Filtering done')
 
 # Saving trimmed file
-path = path.replace('consolidated.csv', '')
+path = functions.path.replace('consolidated.csv', '')
 new.to_csv(path + 'con_trimmed.csv', index=False)
 
 # Stop timer and calculate runtime
 end = time.time()
-timer(start, end)
+functions.timer(start, end)

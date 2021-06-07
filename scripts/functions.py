@@ -1,5 +1,7 @@
 ### Functions for the repo ###
 
+path = ''
+
 
 # Creating the function to insert a row
 def insert_row(df, my_row):
