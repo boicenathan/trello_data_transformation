@@ -1,5 +1,6 @@
 ### Functions for the repo ###
 
+# Update path for repo used in all scripts
 path = ''
 
 
@@ -8,6 +9,7 @@ def insert_row(df, my_row):
     df.loc[len(df)] = my_row
 
 
+# Function to stop timer and display runtime
 def timer(start, end):
     total = round(end - start, 0)
 

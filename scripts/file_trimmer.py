@@ -16,27 +16,28 @@ year = ['2021']
 
 # Creating a new df with only vital columns and cleaning the date field
 new = cons[["Card ID", "Board Name", "List Name", "Last Activity Date"]].copy()
-new.columns = ['card_id', 'board_name', 'list_name', 'last_activity']
-new['last_activity'] = new['last_activity'].str[:10]
+new.columns = ['card_id', 'board_name', 'list_name', 'last_activity']  # Renaming the columns to be easier to reference
+new['last_activity'] = new['last_activity'].str[:10]  # Removing the time from the date
 print('New df created')
 
-# Lists to be included
+# Lists to be INCLUDED
 lists = ['Backlog - Bids', 'Backlog - Other', 'In Progress', 'In Progress - Bids', 'In Progress - Other',
          'Pending Input / Hand Offs', 'Issues and Blockers', 'Completed', 'Completed - Bids',
          'Completed - Other']
 
-# Board sub strings to be excluded
+# Board sub strings to be EXCLUDED
 boards = ['template', 'Template', 'Test', 'test', 'Example', 'example', 'do not use',
           'ASEAN', 'asean', 'Benelux', 'benelux', 'DS&T', 'A2R']
 
 # Filtering the new dataframe by list, board, and date
-new = new[new['list_name'].isin(lists)]
+new = new[new['list_name'].isin(lists)]  # Remove cards that are not in the lists variable
 new['temp'] = new['board_name'].str.extract("(template|Template|Test|test|Example|example|do not use|ASEAN|asean|"
-                                            "Benelux|benelux|DS&T|A2R)")
-new = new[~new['temp'].isin(boards)]
-del new['temp']
-new['year'] = new['last_activity'].str.extract("(2021)")
-new = new[new['year'].isin(year)]
+                                            "Benelux|benelux|DS&T|A2R)")  # Extracting sub strings to a new column
+new = new[~new['temp'].isin(boards)]  # Removing the row if the board name is in the boards list
+del new['temp']  # Removing the temporary column
+new['year'] = new['last_activity'].str.extract("(2021)")  # Extracting the year 2021
+new = new[new['year'].isin(year)]  # Removing rows that do not match the year variable value
+del new['year']  # Removing the temporary column
 print('Filtering done')
 
 # Saving trimmed file

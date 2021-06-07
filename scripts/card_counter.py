@@ -30,7 +30,7 @@ new = new.sort_values('card_count', ascending=False)
 ccount = new['card_count'].sum()
 functions.insert_row(new, ['Total Cards', ccount])
 
-# Saving file
+# Saving file as consolidated
 path = functions.path.replace('consolidated.csv', '')
 new.to_csv(path + '/cards_count ' + str(today) + '.csv', index=False)
 
