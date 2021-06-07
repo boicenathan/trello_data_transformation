@@ -5,25 +5,33 @@ import pandas as pd
 import glob
 import time
 
+path = functions.path
+rowsplit = 652578
+
 # Start timer
 start = time.time()
-
-# Storing all the file paths in the sub directory
-files = glob.glob(functions.path + '/*/*.csv')
+# Get a list of all the paths
+files = glob.glob(path + '/*/*.csv')
 print(str(len(files)), 'files')
 
-# Creating the dataframe
+# Create the dataframe and open them one by one and append them to the df
 data = pd.DataFrame()
 
-# Open each CSV in the sub directory, append the data to the dataframe, and print the progress
 for count, f in enumerate(files, 1):
     csv = pd.read_csv(f, dtype=str, keep_default_na=False)
     data = data.append(csv)
     print(str(round(((count/len(files))*100), 2)) + '%' + ' (' + str(count) + ')')
 
-# Save the dataframe to a CSV
-data.to_csv(functions.path + '/consolidated.csv', index=False)
+if len(data.index) > 1000000:
+    new1 = data.iloc[:rowsplit, :]
+    rowsplit = rowsplit + 1
+    new2 = data.iloc[rowsplit:, :]
+    new1.to_csv(path + '/consolidated1.csv', index=False)
+    new2.to_csv(path + '/consolidated2.csv', index=False)
+else:
+    # Save the consolidated file
+    data.to_csv(path + '/consolidated.csv', index=False)
 
-# Stop timer, calculate and print runtime
+# Stop timer and calculate runtime
 end = time.time()
 functions.timer(start, end)
