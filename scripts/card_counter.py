@@ -32,7 +32,7 @@ functions.insert_row(new, ['Total Cards', ccount])
 
 # Saving file as consolidated
 path = functions.path.replace('consolidated.csv', '')
-new.to_csv(path + '/cards_count ' + str(today) + '.csv', index=False)
+new.to_csv(path + 'cards_count ' + str(today) + '.csv', index=False)
 
 # Stop timer and calculate runtime
 end = time.time()
