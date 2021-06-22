@@ -1,6 +1,5 @@
 ### Functions for the repo ###
 
-# Update path for repo used in all scripts
 path = ''
 
 
@@ -9,13 +8,13 @@ def insert_row(df, my_row):
     df.loc[len(df)] = my_row
 
 
-# Function to stop timer and display runtime
-def timer(start, end):
+# Creating a function to calculate the runtime of the script
+def timer(start, end, today):
     total = round(end - start, 0)
-
     if total < 60:
         print('\nProcess complete in', int(total), 'seconds')
     elif total > 60:
         mintot = total / 60
         sectot = (mintot - int(mintot)) * 60
-        print('\nProcess complete in', int(mintot), 'minutes', int(sectot), 'seconds')
+        now = str(today.strftime("%B %d, %Y %H:%M:%S"))
+        print('Process complete in', int(mintot), 'minutes', int(sectot), 'seconds', 'on', str(now[:-9]), 'at', str(now[-8:]))

@@ -1,6 +1,7 @@
 ### Step 1: Consolidate All CSV's in a Sub Folder ###
 
 import functions
+from datetime import datetime
 import pandas as pd
 import glob
 import time
@@ -10,28 +11,31 @@ rowsplit = 652578
 
 # Start timer
 start = time.time()
+
 # Get a list of all the paths
 files = glob.glob(path + '/*/*.csv')
 print(str(len(files)), 'files')
 
-# Create the dataframe and open them one by one and append them to the df
-data = pd.DataFrame()
+# Create the consolidated dataframe
+print('Consolidating...')
+data = (pd.read_csv(f, sep=',') for f in files)
+merged_df = pd.concat(data, ignore_index=True)
 
-for count, f in enumerate(files, 1):
-    csv = pd.read_csv(f, dtype=str, keep_default_na=False)
-    data = data.append(csv)
-    print(str(round(((count/len(files))*100), 2)) + '%' + ' (' + str(count) + ')')
-
-if len(data.index) > 1000000:
-    new1 = data.iloc[:rowsplit, :]
+if len(merged_df.index) > 1000000:
+    new1 = merged_df.iloc[:rowsplit, :]
     rowsplit = rowsplit + 1
-    new2 = data.iloc[rowsplit:, :]
-    new1.to_csv(path + '/consolidated1.csv', index=False)
-    new2.to_csv(path + '/consolidated2.csv', index=False)
+    new2 = merged_df.iloc[rowsplit:, :]
+    # Saving files
+    new1.to_csv(path + '/Consolidated1.csv', index=False)
+    new2.to_csv(path + '/Consolidated2.csv', index=False)
 else:
-    # Save the consolidated file
-    data.to_csv(path + '/consolidated.csv', index=False)
+    # Saving file
+    merged_df.to_csv(path + '/Consolidated.csv', index=False)
+
+# If total rows is over 1.4m but analysis still needs to be done we need to save this dataframe
+alldata = data
 
 # Stop timer and calculate runtime
 end = time.time()
-functions.timer(start, end)
+today = datetime.now()
+functions.timer(start, end, today)
