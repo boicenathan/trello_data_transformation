@@ -12,9 +12,9 @@ def insert_row(df, my_row):
 def timer(start, end, today):
     total = round(end - start, 0)
     if total < 60:
-        print('\nProcess complete in', int(total), 'seconds')
+        print('Complete in', int(total), 'seconds')
     elif total > 60:
         mintot = total / 60
         sectot = (mintot - int(mintot)) * 60
-        now = str(today.strftime("%B %d, %Y %H:%M:%S"))
-        print('Process complete in', int(mintot), 'minutes', int(sectot), 'seconds', 'on', str(now[:-9]), 'at', str(now[-8:]))
+        now = str(today.strftime("%B %d, %Y %X %p"))
+        print('Complete in', int(mintot), 'minutes', int(sectot), 'seconds on', str(now[:-9]), 'at', str(now[-8:]))
