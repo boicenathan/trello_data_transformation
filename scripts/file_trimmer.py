@@ -2,9 +2,10 @@
 
 import functions
 import pandas as pd
+from datetime import datetime
 import time
 
-path = functions.path
+path = ''
 
 # Start timer
 start = time.time()
@@ -48,8 +49,9 @@ print('Filtering done')
 
 # Saving trimmed file
 path = path.replace('consolidated.csv', '')
-new.to_csv(functions.path + '/con_trimmed.csv', index=False)
+new.to_csv(path + '/con_trimmed.csv', index=False)
 
 # Stop timer and calculate runtime
 end = time.time()
-functions.timer(start, end)
+today = datetime.now()
+functions.timer(start, end, today)
