@@ -38,7 +38,7 @@ def file_consolidator():
     if split:
         rowsplit = 650000
 
-    # Checking if the total rows is over 1m and if so splitting to use in Excel
+    # Splitting the files if needed to work in Excel
     if split:
         new1 = merged_df.iloc[:rowsplit, :]
         rowsplit += 1
@@ -47,7 +47,7 @@ def file_consolidator():
         new1.to_csv('data/Consolidated1.csv', index=False)
         new2.to_csv('data/Consolidated2.csv', index=False)
     else:
-        # Saving file
+        # Saving to one file
         merged_df.to_csv('data/Consolidated.csv', index=False)
 
     # Stop timer and calculate runtime
