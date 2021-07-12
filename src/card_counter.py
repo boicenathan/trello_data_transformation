@@ -1,6 +1,6 @@
 ### Card Count by Board ###
 
-from datetime import date, datetime
+from datetime import date
 import pandas as pd
 import time
 import funcs.functions
@@ -36,9 +36,7 @@ def card_counter():
     new.to_csv('data/Card_Count ' + str(today) + '.csv', index=False)
 
     # Stop timer and calculate runtime
-    end = time.time()
-    today = datetime.now()
-    funcs.functions.timer(start, end, today)
+    funcs.functions.timer(start)
 
 
 if __name__ == '__main__':

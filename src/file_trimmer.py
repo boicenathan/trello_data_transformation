@@ -3,7 +3,6 @@
 import pandas as pd
 import funcs.functions
 import time
-from datetime import datetime
 
 
 def file_trimmer():
@@ -46,9 +45,7 @@ def file_trimmer():
     new.to_csv('data/Trimmed.csv', index=False)    # Saving trimmed file
 
     # Stop timer and calculate runtime
-    end = time.time()
-    today = datetime.now()
-    funcs.functions.timer(start, end, today)
+    funcs.functions.timer(start)
 
 
 if __name__ == '__main__':

@@ -4,7 +4,6 @@ import numpy as np
 import pandas as pd
 import funcs.functions
 import time
-from datetime import datetime
 
 
 def data_compare():
@@ -29,9 +28,7 @@ def data_compare():
     new.to_csv('data/Matches.csv', index=False)
 
     # Stop timer and calculate runtime
-    end = time.time()
-    today = datetime.now()
-    funcs.functions.timer(start, end, today)
+    funcs.functions.timer(start)
 
 
 if __name__ == '__main__':

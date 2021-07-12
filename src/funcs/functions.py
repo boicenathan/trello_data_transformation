@@ -1,4 +1,6 @@
 ### Functions for the repo ###
+import time
+
 
 # Creating the function to insert a row
 def insert_row(df, my_row):
@@ -6,12 +8,13 @@ def insert_row(df, my_row):
 
 
 # Creating a function to calculate the runtime of the script
-def timer(start, end, today):
+def timer(start):
+    end = time.time()
     total = round(end - start, 0)
-    now = str(today.strftime("%B %d, %Y %X %p"))
+    now = time.asctime(time.localtime())
     if total < 60:
-        print(f'Complete in {int(total)} seconds on {str(now[:-9])} at {str(now[-11:])}')
+        print(f"Complete in {int(total)} seconds at {now}")
     elif total > 60:
         mintot = total / 60
         sectot = (mintot - int(mintot)) * 60
-        print(f'Complete in {int(mintot)} minutes {int(sectot)} seconds on {str(now[:-12])} at {str(now[-11:])}')
+        print(f"Complete in {int(mintot)} minutes {int(sectot)} seconds at {now}")
