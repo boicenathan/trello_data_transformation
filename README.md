@@ -2,7 +2,7 @@
 ## Initial setup
 I recommend that you download [PyCharm Community Edition](https://www.jetbrains.com/pycharm/download/) and use that to manage
 this project. They have a great tutorial [here](https://www.jetbrains.com/help/pycharm/quick-start-guide.html#create) that
-walks you through the process of setting up a project and installing Python. This code should work fine for Python >= 3.7
+walks you through the process of setting up a project and installing Python. This code should work fine for Python >= 3.9
 
 The project is located on GitHub [here](https://github.com/boicenathan/trello_data_transformation). You can either 
 download the project or [clone it by connecting your GitHub to PyCharm](https://www.jetbrains.com/help/pycharm/github.html#register-account). 
