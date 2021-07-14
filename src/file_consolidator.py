@@ -1,21 +1,21 @@
 ### Step 1: Consolidate All CSV's in a Sub Folder ###
 
-import os.path
+import os
 import funcs.functions
 import pandas as pd
 import glob
 import time
-
-# If the file should be split
-split = False
 
 
 def file_consolidator():
     # Start timer
     start = time.time()
 
+    # If the file should be split
+    split = False
+
     # Keywords for boards to exclude
-    rboards = ['example', 'test', 'template', 'demo', 'butler', 'board', 'check', 'copy']
+    rboards = {'example', 'test', 'template', 'demo', 'butler', 'board', 'check', 'copy', 'do not use'}
 
     # Get a list of all the paths
     paths = glob.glob('data/boards/*/*.csv')
@@ -29,11 +29,12 @@ def file_consolidator():
     paths = ['data/boards/' + file.rsplit('.', 1)[0] + '/' + file for file in newlst]
 
     # Create the consolidated dataframe
-    print(f"Consolidating {len(newlst)} files...")
     data = (pd.read_csv(p, sep=',') for p in paths)
+    print(f"Merging {len(newlst)} files...")
     merged_df = pd.concat(data, ignore_index=True)
 
     # Splitting the files if needed to work in Excel
+    print("Saving...")
     if split:
         rowsplit = 650000
         new1 = merged_df.iloc[:rowsplit, :]
