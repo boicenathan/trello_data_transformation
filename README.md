@@ -7,7 +7,7 @@ walks you through the process of setting up a project and installing Python. Thi
 The project is located on GitHub [here](https://github.com/boicenathan/trello_data_transformation). You can either 
 download the project or [clone it by connecting your GitHub to PyCharm](https://www.jetbrains.com/help/pycharm/github.html#register-account). 
 
-Then add a folder named `src/data` in the project directory, and extract the downloaded zip folder from Trello into this `src/data` folder.  It should follow this format `src/data/boards`.
+Extract the downloaded zip folder from Trello into the `src/data` folder.  It should follow this format `src/data/boards` as seen below.
 
 <img align="center" src="docs/datapath.PNG">
 
