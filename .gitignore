@@ -1,11 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.pyc
 *.py[cod]
 *$py.class
-
-# Ignore data due to size
-src/data/*
 
 # C extensions
 *.so
@@ -131,7 +127,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# XML & IML
-*.xml
-*.iml
