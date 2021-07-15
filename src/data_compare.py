@@ -21,7 +21,7 @@ def data_compare():
     # Updating column names, merging, and comparing
     print("Transforming...")
     df2.columns = ['card_id', 'squad_name', 'list_name_oth']
-    new = pd.merge(trello_df, df2, on='card_id', how='left') # Merging on card id
+    new = pd.merge(trello_df, df2, on='card_id', how='left')  # Merging on card id
     new['list_match'] = np.where(new.list_name == new.list_name_oth, 'Match', np.nan)  # Checking match
 
     # Saving the file
