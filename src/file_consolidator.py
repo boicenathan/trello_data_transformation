@@ -1,4 +1,4 @@
-### Step 1: Consolidate All CSV's in a Sub Folder ###
+### Consolidate All CSV's in a Sub Folder ###
 
 import os
 import funcs.functions
@@ -11,26 +11,22 @@ def file_consolidator():
     # Start timer
     start = time.time()
 
-    # If the file should be split
-    split = False
+    # Update rows 15 and 16 if needed
+    split = False  # If the file should be split
+    rboards = {'board', 'butler', 'check', 'copy', 'demo', 'do not use', 'example', 'template', 'test'}
+    # ^^^ Keywords for boards to exclude ^^^
 
-    # Keywords for boards to exclude
-    rboards = {'example', 'test', 'template', 'demo', 'butler', 'board', 'check', 'copy', 'do not use'}
-
-    # Get a list of all the paths
+    # Get lists of paths and filenames
     paths = glob.glob('data/boards/*/*.csv')
-
-    # Get all the file names without path
-    print("Filtering...")
     files = [os.path.basename(x) for x in paths]
 
-    # Filtering out boards with certains sub-strings and re-assembling paths
+    # Filtering out boards where filename contains any of the rboards strings and reassembling paths
     newlst = [i for i in files if not any(r in i for r in rboards)]
     paths = ['data/boards/' + file.rsplit('.', 1)[0] + '/' + file for file in newlst]
 
     # Create the consolidated dataframe
+    print(f"Loading and merging {len(newlst)} files...")
     data = (pd.read_csv(p, sep=',') for p in paths)
-    print(f"Merging {len(newlst)} files...")
     merged_df = pd.concat(data, ignore_index=True)
 
     # Splitting the files if needed to work in Excel

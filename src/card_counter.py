@@ -9,31 +9,31 @@ import funcs.functions
 def card_counter():
     # Start timer
     start = time.time()
-    today = str(date.today()).replace('-', '.')
+    today = str(date.today().strftime("%y.%m.%d"))
 
     # Load consolidated file
-    cons = pd.read_csv('data/Consolidated.csv', dtype=str, keep_default_na=False)
-    print('File loaded')
+    print("Loading...")
+    data = pd.read_csv('data/Consolidated.csv', usecols='Board Name', dtype=str, keep_default_na=False)
 
-    # Get a list of the board names
-    boards = list(cons['Board Name'].tolist())
+    # Get full and unique lists of the board names
+    boards = list(data['Board Name'].tolist())
     boards_unique = set(boards)
 
     # Creating a new df with board names
-    new = pd.DataFrame(columns=(['board_name', 'card_count']))
+    df = pd.DataFrame(columns=(['board_name', 'card_count']))
 
     # Append to the df the count of cards per board
     for i in boards_unique:
         ccount = boards.count(i)
-        funcs.functions.insert_row(new, [i, ccount])
+        funcs.functions.insert_row(df, [i, ccount])
 
     # Add a totals row and sort in descending order
-    new = new.sort_values('card_count', ascending=False)
-    ccount = new['card_count'].sum()
-    funcs.functions.insert_row(new, ['Total Cards', ccount])
+    df = df.sort_values('card_count', ascending=False)
+    ccount = df['card_count'].sum()
+    funcs.functions.insert_row(df, ['Total Cards', ccount])
 
     # Saving file
-    new.to_csv('data/Card_Count ' + str(today) + '.csv', index=False)
+    df.to_csv('data/Card_Count_' + today + '.csv', index=False)
 
     # Stop timer and calculate runtime
     funcs.functions.timer(start)
