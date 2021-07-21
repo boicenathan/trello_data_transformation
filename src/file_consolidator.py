@@ -1,50 +1,48 @@
 ### Consolidate All CSV's in a Sub Folder ###
 
-import os
-import funcs.functions
+import os.path
+from funcs.functions import timer
 import pandas as pd
 import glob
-import time
+from time import time
 
 
 def file_consolidator():
     # Start timer
-    start = time.time()
+    start = time()
 
-    # Update rows 15 and 16 if needed
-    split = False  # If the file should be split
-    rboards = {'board', 'butler', 'check', 'copy', 'demo', 'do not use', 'example', 'template', 'test'}
-    # ^^^ Keywords for boards to exclude ^^^
+    # If the file should be split
+    split = False
 
-    # Get lists of paths and filenames
+    # Sub-strings to exclude
+    rboards = ['example', 'test', 'template', 'demo', 'butler', 'board', 'check', 'copy', 'do not use', 'asean',
+               'benelux', 'ds&t', 'a2r']
+
+    # Get a list of all the paths and base file names
     paths = glob.glob('data/boards/*/*.csv')
     files = [os.path.basename(x) for x in paths]
 
-    # Filtering out boards where filename contains any of the rboards strings and reassembling paths
+    # Filtering out boards with sub-strings from above and re-assembling paths
     newlst = [i for i in files if not any(r in i for r in rboards)]
     paths = ['data/boards/' + file.rsplit('.', 1)[0] + '/' + file for file in newlst]
 
-    # Create the consolidated dataframe
-    print(f"Loading and merging {len(newlst)} files...")
-    data = (pd.read_csv(p, sep=',') for p in paths)
+    # Merging all the files
+    print(f"Merging {len(newlst)} files, {len(files) - len(newlst)} filtered out")
+    data = [pd.read_csv(p, sep=',') for p in paths]
     merged_df = pd.concat(data, ignore_index=True)
 
-    # Splitting the files if needed to work in Excel
-    print("Saving...")
-    if split:
-        rowsplit = 650000
-        new1 = merged_df.iloc[:rowsplit, :]
-        rowsplit += 1
-        new2 = merged_df.iloc[rowsplit:, :]
-        # Saving files
-        new1.to_csv('data/Consolidated1.csv', index=False)
-        new2.to_csv('data/Consolidated2.csv', index=False)
+    # Saving the merged dataframe
+    print(f"Saving {len(merged_df):,} rows")
+    if split:  # Splitting the dataframe if indicated
+        new1 = merged_df.iloc[:1000000, :]
+        new2 = merged_df.iloc[1000001:, :]
+        new1.to_csv('data/Consolidated1.csv', index=False, encoding='utf-8-sig')
+        new2.to_csv('data/Consolidated2.csv', index=False, encoding='utf-8-sig')
     else:
-        # Saving to one file
-        merged_df.to_csv('data/Consolidated.csv', index=False)
+        merged_df.to_csv('data/Consolidated.csv', index=False, encoding='utf-8-sig')
 
     # Stop timer and calculate runtime
-    funcs.functions.timer(start)
+    timer(start, "Merging")
 
 
 if __name__ == '__main__':

@@ -1,20 +1,18 @@
-### Functions  ###
-import time
+### Functions for the repo ###
+
+from time import time, asctime, localtime
 
 
-# Creating the function to insert a row
 def insert_row(df, my_row):
+    """ Function to insert a row to a dataframe. """
     df.loc[len(df)] = my_row
 
 
-# Creating a function to calculate the runtime of the script
-def timer(start):
-    end = time.time()
-    total = round(end - start, 0)
-    now = time.asctime(time.localtime())
+def timer(start, process):
+    """ Timer to calculate program runtime. """
+    total = time() - start
     if total < 60:
-        print(f"Complete in {int(total)} seconds at {now}")
+        print(f"{process} complete in {round(total, 0)} seconds on {asctime(localtime())}")
     elif total > 60:
-        mintot = total / 60
-        sectot = (mintot - int(mintot)) * 60
-        print(f"Complete in {int(mintot)} minutes {int(sectot)} seconds at {now}")
+        print(f"{process} complete in {round(total / 60, 0)} minutes "
+              f"{round(((total / 60) - round(total / 60, 0)) * 60, 0)} seconds on {asctime(localtime())}")
